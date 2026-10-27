@@ -1,0 +1,73 @@
+import java.util.Scanner;
+
+abstract class EnergySource {
+    int sourceID;
+    String sourceName;
+    double energyGenerated;
+
+    public EnergySource(int sourceID, String sourceName, double energyGenerated) {
+        this.sourceID = sourceID;
+        this.sourceName = sourceName;
+        this.energyGenerated = energyGenerated;
+    }
+
+    public abstract double calculateEfficiency();
+
+    public void displayDetails() {
+        System.out.println("Source Name: " + sourceName);
+        System.out.println("Energy Generated: " + energyGenerated + " kWh");
+        System.out.println("Efficiency: " + calculateEfficiency());
+    }
+}
+
+class SolarEnergy extends EnergySource {
+    public SolarEnergy(int sourceID, String sourceName, double energyGenerated) {
+        super(sourceID, sourceName, energyGenerated);
+    }
+
+    public double calculateEfficiency() {
+        return (energyGenerated / 5000.0) * 100;
+    }
+}
+
+class WindEnergy extends EnergySource {
+    public WindEnergy(int sourceID, String sourceName, double energyGenerated) {
+        super(sourceID, sourceName, energyGenerated);
+    }
+
+    public double calculateEfficiency() {
+        return (energyGenerated / 8000.0) * 100;
+    }
+}
+
+public class Energy {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Enter the Solar Source ID: ");
+        int solarID = sc.nextInt();
+        sc.nextLine();
+        System.out.println("Enter Solar Source Name: ");
+        String solarName = sc.nextLine();
+        System.out.println("Enter Solar Energy Generated (kWh): ");
+        double solarUnits = sc.nextDouble();
+        
+        System.out.println("Enter the Wind Source ID: ");
+        int windID = sc.nextInt();
+        sc.nextLine(); 
+        System.out.println("Enter Wind Source Name: ");
+        String windName = sc.nextLine();
+        System.out.println("Enter Wind Energy Generated (kWh): ");
+        double windUnits = sc.nextDouble();
+
+        EnergySource sourceRef;
+
+        sourceRef = new SolarEnergy(solarID, solarName, solarUnits);
+        sourceRef.displayDetails();
+
+        sourceRef = new WindEnergy(windID, windName, windUnits);
+        sourceRef.displayDetails();
+
+        sc.close();
+    }
+}
